@@ -1,0 +1,64 @@
+<!-- templates/search_results.html -->
+{% extends 'layouts/main.html' %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="form-wrapper">
+        <form class="form" method="post" action="/search">
+            {{ form.hidden_tag() }}
+    <h3 class="form-heading">Search Artists and Venues</h3>
+        <div class="form-group">
+            {{ form.city.label(class='form-label') }}
+            {{ form.city(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.state.label(class='form-label') }}
+            {{ form.state(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class='btn btn-primary') }}
+        </div>
+    </form>
+{% if artists or venues %} 
+    <h2>Artists</h2>
+    <div class="row">
+        {% for artist in artists %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ artist.image_link }}" alt="Artist Image" class="card-img-top" style="width: 100px; height: auto;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ artist.name }}</h5>
+                    <p class="card-text">Location: {{ artist.city }}, {{ artist.state }}</p>
+                    <a href="/artists/{{ artist.id }}" class="btn btn-primary">View Artist</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not artists %}
+        <p>No artists found.</p>
+        {% endif %}
+    </div>
+
+    <h2>Venues</h2>
+    <div class="row">
+        {% for venue in venues %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ venue.image_link or url_for('static', filename='img/default-venue.jpg') }}" alt="Venue Image" class="card-img-top" style="width: 100px; height: auto;">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ venue.name }}</h5>
+                    <p class="card-text">Location: {{ venue.city }}, {{ venue.state }}</p>
+                    <a href="/venues/{{ venue.id }}" class="btn btn-primary">View Venue</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not venues %}
+        <p>No venues found.</p>
+        {% endif %}
+    </div>
+{% endif %}
+</div>
+{% endblock %}
