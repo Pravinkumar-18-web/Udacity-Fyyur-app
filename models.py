@@ -3,9 +3,8 @@ Artist, Venue and Show models
 """
 # Imports
 
-from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import JSON
+from sqlalchemy import ARRAY, JSON
 
 db = SQLAlchemy()
 
@@ -21,7 +20,7 @@ class Artist(db.Model):
     city = db.Column(db.String(120))
     state = db.Column(db.String(120))
     phone = db.Column(db.String(120))
-    genres = db.Column(db.String(120))
+    genres = db.Column(ARRAY(db.String))
     website_link = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
@@ -31,7 +30,7 @@ class Artist(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
 
     venues = db.relationship('Venue', secondary='shows')
-    shows = db.relationship('Show', backref=('artists'))
+    shows = db.relationship('Show', backref=('artists'),lazy='joined',cascade ="all,delete" )
 
     def to_dict(self):
         """ Returns a dictinary of artists """
@@ -64,7 +63,7 @@ class Venue(db.Model):
     state = db.Column(db.String(120))
     address = db.Column(db.String(120))
     phone = db.Column(db.String(120))
-    genres = db.Column(db.String(120))
+    genres = db.Column(ARRAY(db.String))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
     website_link = db.Column(db.String(120))
@@ -73,7 +72,7 @@ class Venue(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
 
     artists = db.relationship('Artist', secondary='shows')
-    shows = db.relationship('Show', backref=('venues'))
+    shows = db.relationship('Show', backref=('venues') ,lazy='joined', cascade ="all,delete")
 
     def to_dict(self):
         """ Returns a dictinary of venues """
@@ -116,7 +115,6 @@ class Show(db.Model):
             'artist_id': self.artist_id,
             'artist_name': self.artist.name,
             'artist_image_link': self.artist.image_link,
-            # convert datetime to string
             'start_time': self.start_time.strftime('%Y-%m-%d %H:%M:%S')
         }
 
@@ -126,6 +124,5 @@ class Show(db.Model):
             'venue_id': self.venue_id,
             'venue_name': self.venue.name,
             'venue_image_link': self.venue.image_link,
-            # convert datetime to string
             'start_time': self.start_time.strftime('%Y-%m-%d %H:%M:%S')
         }

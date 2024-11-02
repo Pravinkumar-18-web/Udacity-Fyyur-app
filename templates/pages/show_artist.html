@@ -26,6 +26,18 @@
 		<p>
 			<i class="fab fa-facebook-f"></i> {% if artist.facebook_link %}<a href="{{ artist.facebook_link }}" target="_blank">{{ artist.facebook_link }}</a>{% else %}No Facebook Link{% endif %}
         </p>
+		<div class="availability-section">
+			{% if availability_data %}
+			    <h2 class="availability-title">Available on</h2>
+				<ul class="availability-list">
+					{% for slot in availability_data %}
+						<li class="availability-item">{{ slot }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p class="unavailable">currently unavailable</p>
+			{% endif %}
+		</div>
 		{% if artist.seeking_venue == True %}
 		<div class="seeking">
 			<p class="lead">Currently seeking performance venues</p>

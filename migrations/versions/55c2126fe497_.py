@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b35929c536b1
+Revision ID: 55c2126fe497
 Revises: 
-Create Date: 2024-10-29 10:40:27.248411
+Create Date: 2024-11-01 16:21:56.197357
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b35929c536b1'
+revision = '55c2126fe497'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,12 +24,14 @@ def upgrade():
     sa.Column('city', sa.String(length=120), nullable=True),
     sa.Column('state', sa.String(length=120), nullable=True),
     sa.Column('phone', sa.String(length=120), nullable=True),
-    sa.Column('genres', sa.String(length=120), nullable=True),
+    sa.Column('genres', sa.ARRAY(sa.String()), nullable=True),
     sa.Column('website_link', sa.String(length=120), nullable=True),
     sa.Column('image_link', sa.String(length=500), nullable=True),
     sa.Column('facebook_link', sa.String(length=120), nullable=True),
     sa.Column('seeking_venue', sa.Boolean(), nullable=False),
     sa.Column('seeking_description', sa.String(length=120), nullable=True),
+    sa.Column('availability', sa.JSON(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('venues',
@@ -39,12 +41,13 @@ def upgrade():
     sa.Column('state', sa.String(length=120), nullable=True),
     sa.Column('address', sa.String(length=120), nullable=True),
     sa.Column('phone', sa.String(length=120), nullable=True),
-    sa.Column('genres', sa.String(length=120), nullable=True),
+    sa.Column('genres', sa.ARRAY(sa.String()), nullable=True),
     sa.Column('image_link', sa.String(length=500), nullable=True),
     sa.Column('facebook_link', sa.String(length=120), nullable=True),
     sa.Column('website_link', sa.String(length=120), nullable=True),
     sa.Column('seeking_talent', sa.Boolean(), nullable=False),
     sa.Column('seeking_description', sa.String(length=120), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('shows',

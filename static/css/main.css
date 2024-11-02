@@ -212,3 +212,33 @@ h2.monospace {
 .hidden {
   display: none;
 }
+
+.availability-section {
+  margin: 20px 0; 
+}
+.availability-title {
+  color: green; 
+  font-size: 24px; 
+}
+
+.availability-list {
+  list-style-type: none; 
+  padding: 0; 
+}
+
+.availability-item {
+  background-color: #e0ffe0; 
+  color: #2e702e; 
+  padding: 10px; 
+  margin: 5px 0; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+.unavailable {
+  color: red;
+  font-weight: bold; /* Optional: make the text bold */
+  background-color: #f8d7da; /* Optional: light red background */
+  padding: 10px; /* Optional: add some padding */
+  border: 1px solid #f5c6cb; /* Optional: border */
+  border-radius: 5px; /* Optional: rounded corners */
+}
